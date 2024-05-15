@@ -6,6 +6,9 @@ if [[ -z "$WP_DB_USER" ]]; then echo "Erreur : WP_DB_USER n'est pas défini."; e
 if [[ -z "$WP_DB_PWD" ]]; then echo "Erreur : WP_DB_PWD n'est pas défini."; exit 1; fi
 if [[ -z "$MARIADB_ROOT_PASSWORD" ]]; then echo "Erreur : MARIADB_ROOT_PASSWORD n'est pas défini."; exit 1; fi
 
+# Initialiser le répertoire de données MariaDB
+mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
 # Démarrez MariaDB en mode bootstrap
 mariadbd --user=mysql --bootstrap <<EOF
 USE mysql;
