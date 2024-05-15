@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   nginx:
     build: requirements/nginx/.
@@ -8,7 +6,9 @@ services:
       - wordpress
       - mariadb
     ports:
-      - "80:80"
+      - "443:443"
+    env_file:
+      - .env
     volumes:
       - ./web:/var/www/html
     networks:
@@ -16,6 +16,8 @@ services:
   wordpress:
     build: requirements/wordpress/.
     container_name: wp-php
+    env_file:
+      - .env
     depends_on:
       - mariadb
     volumes:
@@ -24,6 +26,8 @@ services:
       inception:
   mariadb:
     build: requirements/mariadb/.
+    env_file:
+      - .env
     container_name: mariadb
     volumes:
       - ./database:/var/lib/mysql
