@@ -27,6 +27,11 @@ if ! [ -e wp-config.php ]; then
     ./wp-cli.phar user create $WP_USER $WP_EMAIL --role=subscriber --user_pass=$WP_PASSWORD --allow-root
 fi
 
+
+# Ajouter les constantes Redis à wp-config.php
+echo "define('WP_REDIS_HOST', 'redis');" >> wp-config.php
+echo "define('WP_REDIS_PORT', '6379');" >> wp-config.php
+
 mkdir -p /run/php/
 
 # Exécuter php-fpm
