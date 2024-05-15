@@ -24,7 +24,7 @@ if ! [ -e wp-config.php ]; then
     ./wp-cli.phar core download --allow-root
     ./wp-cli.phar config create --dbname=$WP_DATABASE --dbuser=$WP_DB_USER --dbpass=$WP_DB_PWD --dbhost=mariadb --allow-root
     ./wp-cli.phar core install --url=$WP_URL --title=$TITLE --admin_user=$WP_ADMIN_USER --admin_password=$WP_ADMIN_PWD --admin_email=$WP_ADMIN_EMAIL --allow-root
-    ./wp-cli.phar user create $WP_USER $WP_EMAIL --role=user --user_pass=$WP_PASSWORD --allow-root
+    ./wp-cli.phar user create $WP_USER $WP_EMAIL --role=subscriber --user_pass=$WP_PASSWORD --allow-root
 fi
 
 mkdir -p /run/php/
