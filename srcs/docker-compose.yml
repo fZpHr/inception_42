@@ -1,6 +1,15 @@
 services:
+  static_web:
+    build: requirements/bonus/static_web/.
+    container_name: static_web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/var/www/html
+    networks:
+      inception:
   ftp:
-    build: requirements/ftp/.
+    build: requirements/bonus/ftp/.
     container_name: ftp
     env_file:
       - .env
@@ -14,12 +23,12 @@ services:
     networks:
       inception:
   redis:
-    build: requirements/redis/.
+    build: requirements/bonus/redis/.
     container_name: redis
+    volumes:
+      - ./web:/var/www/html
     ports:
       - "6379:6379"
-    depends_on:
-      - wordpress
     networks:
       inception:
   nginx:
@@ -42,6 +51,7 @@ services:
     env_file:
       - .env
     depends_on:
+      - redis
       - mariadb
     volumes:
       - ./web:/var/www/html
