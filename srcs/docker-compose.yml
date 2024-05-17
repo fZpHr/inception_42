@@ -1,4 +1,11 @@
 services:
+  adminer:
+    build: requirements/bonus/adminer/.
+    container_name: adminer
+    ports:
+      - "8081:80"
+    networks:
+      inception:
   static_web:
     build: requirements/bonus/static_web/.
     container_name: static_web

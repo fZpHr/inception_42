@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.discordapp.com/attachments/1161718265639346218/1229801696075579414/FFOnSnqXEAgA0GG.jpg?ex=66481354&is=6646c1d4&hm=88d72320390f592eec91e9d438ea80e6a7c7b5b94b23473c2b06b55d1120448a&');
+            background-size: cover;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #movingImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+        }
+        #centerText {
+            position: absolute;
+            font-size: 3em;
+            color: rgb(255, 255, 255);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="background">
+        <div id="centerText">Try to click on doigdrip (this is possible)</div>
+        <div id="container">
+            <a href="https://www.youtube.com/watch?v=8P5WCI0iQlo">
+                <img id="movingImage" src="https://cdn.discordapp.com/attachments/1182615238110093422/1238499368781484052/download.png?ex=664813ab&is=6646c22b&hm=0bddfe727832695ab0bc0bad10a93464069afc388b07e41a0d26a69dedc84f27&" alt="Moving image">
+            </a>
+        </div>
+    </div>
+    <script>
+        var img = document.getElementById('movingImage');
+        var dx = 5;
+        var dy = 5;
+
+        function moveImage() {
+            var x = img.offsetLeft;
+            var y = img.offsetTop;
+
+            if (x + dx > window.innerWidth - img.width || x + dx < 0) {
+                dx = -dx;
+            }
+            if (y + dy > window.innerHeight - img.height || y + dy < 0) {
+                dy = -dy;
+            }
+
+            img.style.left = x + dx + 'px';
+            img.style.top = y + dy + 'px';
+
+            requestAnimationFrame(moveImage);
+        }
+
+        img.addEventListener('mouseover', function() {
+            var x = Math.random() * (window.innerWidth - img.width);
+            var y = Math.random() * (window.innerHeight - img.height);
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+        });
+
+        window.onload = function() {
+            moveImage();
+        };
+    </script>
+</body>
+</html>
