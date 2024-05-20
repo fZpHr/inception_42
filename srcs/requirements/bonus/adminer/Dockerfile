@@ -1,24 +1,14 @@
 FROM debian:bullseye
 
-# Install PHP-FPM, PHP MySQLi, curl, and PHP Redis
-RUN apt update && apt install -y php7.4-fpm php7.4-mysqli curl php-redis
+RUN apt-get update && apt-get install -y curl php php-fpm php-mysqli php-pdo php-pdo-mysql && rm -rf /var/lib/apt/lists/*
 
+RUN curl -L -O https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php
+RUN mkdir -p /var/www/html
+RUN mv ./adminer-4.8.1.php /var/www/html/index.php
 
-COPY tools/index.html /var/lib/nginx/html/.
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /run/php
+RUN chown www-data:www-data /run/php
 
-CMD ["nginx", "-g", "daemon off;"]
-# Copy PHP-FPM configuration file
-COPY conf/www.conf /etc/php/7.4/fpm/pool.d/
+COPY /conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-# Install Nginx
-RUN apt install -y nginx
-
-# Copy Nginx configuration file
-COPY conf/nginx.conf /etc/nginx/nginx.conf
-
-# Copy Adminer to the web directory
-COPY conf/adminer-4.8.1.php /var/www/html/adminer.php
-
-# Start Nginx and PHP-FPM
-CMD service nginx start && service php7.4-fpm start
+CMD ["php-fpm7.4", "--nodaemonize"]

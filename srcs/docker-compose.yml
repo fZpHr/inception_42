@@ -1,24 +1,36 @@
 services:
+  portainer:
+    build: requirements/bonus/portainer/.
+    container_name: portainer
+    ports:
+      - "8000:8000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      inception:
   adminer:
     build: requirements/bonus/adminer/.
     container_name: adminer
     ports:
-      - "8081:80"
+      - "9000"
     networks:
       inception:
   static_web:
     build: requirements/bonus/static_web/.
     container_name: static_web
     ports:
-      - "8080:80"
+      - "8080"
     volumes:
-      - ./web:/var/www/html
+      - web:/var/www/html
     networks:
       inception:
   ftp:
     build: requirements/bonus/ftp/.
     container_name: ftp
     env_file:
+      - ../secrets/.credentials
       - .env
     depends_on:
       - wordpress
@@ -26,14 +38,14 @@ services:
       - "21:21"
       - "21000-21010:21000-21010"
     volumes:
-      - ./web:/var/www/html
+      - web:/var/www/html
     networks:
       inception:
   redis:
     build: requirements/bonus/redis/.
     container_name: redis
     volumes:
-      - ./web:/var/www/html
+      - web:/var/www/html
     ports:
       - "6379:6379"
     networks:
@@ -49,30 +61,49 @@ services:
     env_file:
       - .env
     volumes:
-      - ./web:/var/www/html
+      - web:/var/www/html
     networks:
       inception:
   wordpress:
     build: requirements/wordpress/.
     container_name: wp-php
     env_file:
+      - ../secrets/.db_password
+      - ../secrets/.credentials
       - .env
     depends_on:
       - redis
       - mariadb
     volumes:
-      - ./web:/var/www/html
+      - web:/var/www/html
     networks:
       inception:
   mariadb:
     build: requirements/mariadb/.
     env_file:
+      - ../secrets/.db_password
+      - ../secrets/.db_root_password
       - .env
     container_name: mariadb
     volumes:
-      - ./database:/var/lib/mysql
+      - database:/var/lib/mysql
     networks:
       inception:
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hbelle/data/mysql
+      o: bind
+  web:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/hbelle/data/wordpress
+      o: bind
+  portainer_data:
 
 networks:
   inception:

@@ -12,10 +12,10 @@ if [[ -z "$WP_ADMIN_EMAIL" ]]; then echo "Erreur : WP_ADMIN_EMAIL n'est pas déf
 
 cd /var/www/html
 
+php wp-cli.phar --info
 # Vérifier si WordPress est déjà installé
 if ! [ -e wp-config.php ]; then
     # Télécharger et configurer WordPress
-    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     chmod +x wp-cli.phar
     ./wp-cli.phar core download --allow-root
     ./wp-cli.phar config create --dbname=$WP_DATABASE --dbuser=$WP_DB_USER --dbpass=$WP_DB_PWD --dbhost=mariadb --allow-root

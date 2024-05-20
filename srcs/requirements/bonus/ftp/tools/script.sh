@@ -9,14 +9,11 @@ if [ ! -f "/etc/vsftpd/vsftpd.conf.bak" ]; then
     # Créez le répertoire home de l'utilisateur FTP
     mkdir -p /var/www/html
 
-    # Sauvegardez le fichier de configuration original de vsftpd
-    cp /etc/vsftpd/vsftpd.conf /etc/vsftpd/vsftpd.conf.bak
-
-    # Remplacez le fichier de configuration de vsftpd par le vôtre
+    # Remplacez le fichier de configuration de vsftpd par le mien
     mv /tmp/vsftpd.conf /etc/vsftpd/vsftpd.conf
 
     # Créez l'utilisateur FTP
-    adduser $FTP_USER --disabled-password
+    yes "" | adduser $FTP_USER --disabled-password
 
     # Définissez le mot de passe de l'utilisateur FTP
     echo "$FTP_USER:$FTP_PASSWORD" | chpasswd

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('wallpaper.png');
+            background-size: auto;
+            background-repeat: repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #movingImage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150px;
+            height: 150px;
+        }
+        #centerText {
+            position: absolute;
+            font-size: 3em;
+            color: rgb(255, 255, 255);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="background">
+        <div id="centerText">Try to click on doigdrip (this is possible)</div>
+        <div id="container">
+            <a href="https://www.youtube.com/watch?v=8P5WCI0iQlo">
+                <img id="movingImage" src="doigdrip.jpg" alt="Moving image">
+            </a>
+        </div>
+    </div>
+    <script>
+        var img = document.getElementById('movingImage');
+        var dx = 5;
+        var dy = 5;
+
+        function moveImage() {
+            var x = img.offsetLeft;
+            var y = img.offsetTop;
+
+            if (x + dx > window.innerWidth - img.width || x + dx < 0) {
+                dx = -dx;
+            }
+            if (y + dy > window.innerHeight - img.height || y + dy < 0) {
+                dy = -dy;
+            }
+
+            img.style.left = x + dx + 'px';
+            img.style.top = y + dy + 'px';
+
+            requestAnimationFrame(moveImage);
+        }
+
+        img.addEventListener('mouseover', function() {
+            var x = Math.random() * (window.innerWidth - img.width);
+            var y = Math.random() * (window.innerHeight - img.height);
+            img.style.left = x + 'px';
+            img.style.top = y + 'px';
+        });
+
+        window.onload = function() {
+            moveImage();
+        };
+    </script>
+</body>
+</html>
