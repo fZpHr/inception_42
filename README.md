@@ -4,7 +4,7 @@ Inception is a project at school 42 that focuses on virtualization and the use o
 
 *For more information, please refer to the subject in the git.*
 
-## Container
+## Containers
 
 The project includes the following services:
 
@@ -42,7 +42,7 @@ To use Inception, follow the configuration steps and execute the specified Docke
     make down
     ```
 
-## Bonus Containers
+## Bonus containers
 
 1. **Adminer**: A database management tool for interacting with SQL databases.
 
