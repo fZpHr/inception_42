@@ -37,5 +37,5 @@ fi
 
 mkdir -p /run/php/
 chmod 775 wp-content/object-cache.php
-# Exécuter php-fpm
+# Exécute php-fpm
 php-fpm7.4 -F
